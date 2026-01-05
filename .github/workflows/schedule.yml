@@ -41,4 +41,4 @@ jobs:
         with:
           commit_message: "Update exchange rates [skip ci]"
           file_pattern: 'rates.json' # Only commit the data file
-          push_options: '--force'
+          push_options: '--force' 
