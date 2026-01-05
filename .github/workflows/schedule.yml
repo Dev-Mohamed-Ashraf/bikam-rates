@@ -1,10 +1,12 @@
 name: Daily Exchange Rate Scrape
+# Force Update 1.1
 
 on:
   schedule:
-    - cron: '*/30 * * * *' # Run every 30 minutes
+    - cron: '*/15 * * * *' # Run every 15 minutes
   workflow_dispatch: # Allow manual trigger
 
+# ⚠️ Permissions are critical
 permissions:
   contents: write
 
@@ -19,17 +21,23 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '18'
 
+      # Combined step to ensure context and dependencies
       - name: Install and Run Scraper
         run: |
           cd scraper
+          echo "📂 Current Directory:"
+          ls -la
+          echo "📦 Installing Dependencies..."
           npm install axios cheerio --no-save
+          echo "🚀 Running Scraper..."
           node index.js
 
+      # Use a dedicated action for committing (More reliable than manual scripts)
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update exchange rates [skip ci]"
-          file_pattern: 'rates.json'
+          file_pattern: 'rates.json' # Only commit the data file
           push_options: '--force'
