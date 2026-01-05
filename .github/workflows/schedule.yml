@@ -1,4 +1,5 @@
 name: Daily Exchange Rate Scrape
+# Force Update 1.1
 
 on:
   schedule:
