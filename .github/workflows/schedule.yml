@@ -9,6 +9,7 @@ on:
 # ⚠️ Permissions are critical
 permissions:
   contents: write
+  workflows: write 
 
 jobs:
   build:
