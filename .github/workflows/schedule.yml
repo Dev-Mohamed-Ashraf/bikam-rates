@@ -22,14 +22,15 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
+      # Combined step to ensure context and dependencies
+      - name: Install and Run Scraper
         run: |
           cd scraper
-          npm install axios cheerio
-
-      - name: Run Scraper
-        run: |
-          cd scraper
+          echo "📂 Current Directory:"
+          ls -la
+          echo "📦 Installing Dependencies..."
+          npm install axios cheerio --no-save
+          echo "🚀 Running Scraper..."
           node index.js
 
       # Use a dedicated action for committing (More reliable than manual scripts)
