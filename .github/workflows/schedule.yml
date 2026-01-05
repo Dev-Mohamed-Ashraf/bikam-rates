@@ -6,12 +6,13 @@ on:
   workflow_dispatch: # Allow manual trigger
 
 jobs:
-  scrape-and-commit:
+  scrape:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # ⚠️ IMPORTANT: Allows writing to repo
+
     steps:
-      - name: Checkout code
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Setup Node
@@ -22,18 +23,17 @@ jobs:
       - name: Install dependencies
         run: |
           cd scraper
-          # npm install axios cheerio (Uncomment in real usage)
+          npm install
 
       - name: Run Scraper
         run: |
           cd scraper
           node index.js
 
-      - name: Commit and Push if changed
+      - name: Commit and push
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
-          mv scraper/rates.json rates.json
-          git add rates.json
-          git commit -m "Update exchange rates [skip ci]" || exit 0
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add .
+          git commit -m "Update rates [skip ci]" || echo "No changes to commit"
           git push
