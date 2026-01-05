@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "last_updated": "2026-01-05T22:00:20.337Z",
+    "base_currency": "USD",
+    "source": "Aggregated Bank Data"
+  },
+  "banks": [
+    {
+      "id": "cairo",
+      "name": "Banque du Caire",
+      "buy": "50.50",
+      "sell": "50.80",
+      "logo": "assets/banks/cairo.jpg"
+    },
+    {
+      "id": "nbe",
+      "name": "National Bank of Egypt",
+      "buy": "50.50",
+      "sell": "50.75",
+      "logo": "assets/banks/nbe.jpeg"
+    },
+    {
+      "id": "misr",
+      "name": "Banque Misr",
+      "buy": "50.50",
+      "sell": "50.75",
+      "logo": "assets/banks/misr.jpg"
+    },
+    {
+      "id": "cib",
+      "name": "CIB",
+      "buy": "50.40",
+      "sell": "51.01",
+      "logo": "assets/banks/cib.png"
+    },
+    {
+      "id": "alex",
+      "name": "Alex Bank",
+      "buy": "50.30",
+      "sell": "51.11",
+      "logo": "assets/banks/alex.jpg"
+    }
+  ]
+}
