@@ -1,0 +1,39 @@
+name: Daily Exchange Rate Scrape
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # Run every 30 minutes
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  scrape-and-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          cd scraper
+          # npm install axios cheerio (Uncomment in real usage)
+
+      - name: Run Scraper
+        run: |
+          cd scraper
+          node index.js
+
+      - name: Commit and Push if changed
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          mv scraper/rates.json rates.json
+          git add rates.json
+          git commit -m "Update exchange rates [skip ci]" || exit 0
+          git push
