@@ -5,11 +5,13 @@ on:
     - cron: '*/30 * * * *' # Run every 30 minutes
   workflow_dispatch: # Allow manual trigger
 
+# ⚠️ Permissions are critical
+permissions:
+  contents: write
+
 jobs:
-  scrape:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # ⚠️ IMPORTANT: Allows writing to repo
 
     steps:
       - name: Checkout repo
@@ -30,10 +32,10 @@ jobs:
           cd scraper
           node index.js
 
-      - name: Commit and push
-        run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'action@github.com'
-          git add .
-          git commit -m "Update rates [skip ci]" || echo "No changes to commit"
-          git push
+      # Use a dedicated action for committing (More reliable than manual scripts)
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update exchange rates [skip ci]"
+          file_pattern: 'rates.json' # Only commit the data file
+          push_options: '--force'
